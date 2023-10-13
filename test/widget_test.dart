@@ -1,30 +1,26 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
+import 'package:desafioimcdio/bloc/imc.bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:desafioimcdio/main.dart';
-
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  test('Valida se os campos não foram preenchidos', () {
+    final bloc = ImcBloc();
+    bloc.calcularImc();
+    expect(bloc.result, equals('Informe todos os dados'));
+  });
+  test('Deve retornar IMC Saudável', () {
+    final bloc = ImcBloc();
+    bloc.nomeCtrl.text = 'Joaozinho';
+    bloc.alturaCtrl.text = '166';
+    bloc.pesoCtrl.text = '78';
+    bloc.calcularImc();
+    expect(bloc.result, contains('Saudável'));
+  });
+  test('Deve retornar IMC Magreza grave', () {
+    final bloc = ImcBloc();
+    bloc.nomeCtrl.text = 'Joaozinho';
+    bloc.alturaCtrl.text = '160';
+    bloc.pesoCtrl.text = '30';
+    bloc.calcularImc();
+    expect(bloc.result, contains('Magreza grave'));
   });
 }
