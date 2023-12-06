@@ -1,3 +1,4 @@
+import 'package:desafioimcdio/constantes/mensagens.dart';
 import 'package:desafioimcdio/model/pessoa.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
@@ -6,12 +7,12 @@ class ImcBloc {
   final nomeCtrl = TextEditingController();
   final pesoCtrl = MaskedTextController(mask: '000');
   final alturaCtrl = MaskedTextController(mask: '000');
-  var result = 'Preencha os dados para calcular o seu IMC';
+  var result = Mensagens.preencherDados;
 
   calcularImc() {
     try {
       if (nomeCtrl.text.isEmpty || alturaCtrl.text.isEmpty || pesoCtrl.text.isEmpty) {
-        result = 'Informe todos os dados';
+        result = Mensagens.informeTodosDados;
       } else {
         double peso = double.parse(pesoCtrl.text);
         double altura = double.parse(alturaCtrl.text) / 100;
@@ -40,7 +41,7 @@ class ImcBloc {
         }
       }
     } catch (e) {
-      result = 'Erro no operação';
+      result = Mensagens.erroOperacao;
     }
   }
 }
